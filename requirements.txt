@@ -1,0 +1,4 @@
+# use dependencies from setup.py
+# it's better for libs/frameworks to do this instead of splitting between
+# abstract & concrete requirements
+-e .

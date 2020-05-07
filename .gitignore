@@ -1,0 +1,28 @@
+venv
+#envs/gym/gym/__pycache__/__init__.cpython-36.pyc
+#envs/gym/gym/__pycache__/core.cpython-36.pyc
+#envs/gym/gym/__pycache__/error.cpython-36.pyc
+#envs/gym/gym/__pycache__/logger.cpython-36.pyc
+#envs/gym/gym/envs/__pycache__/
+#envs/gym/gym/envs/classic_control/__pycache__/
+#envs/gym/gym/spaces/__pycache__/
+#envs/gym/gym/utils/__pycache__/
+#envs/gym/gym/wrappers/__pycache__/
+#envs/gym/gym/wrappers/monitoring/__pycache__/
+build/
+rl_baselines/experiments/dqn/results/
+rl_baselines/experiments/ide/results/
+rl_baselines/experiments/qrdqn/results/
+rl_baselines/experiments/eqrdqn/results/
+dist
+rl_baselines.egg-info/
+*__pycache__/
+*.pth
+*.pkl
+rl_baselines/experiments/dqn/ising/
+
+# intellij
+.idea
+
+# mypy cache
+.mypy_cache/

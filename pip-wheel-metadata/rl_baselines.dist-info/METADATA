@@ -1,0 +1,51 @@
+Metadata-Version: 2.1
+Name: rl-baselines
+Version: 0.0.1
+Summary: Reinforcement-Learning baselines.
+Home-page: https://github.com/unchartech/rl_baselines
+Author: Uncharteam
+Author-email: uncharteam@unchartech.com
+License: UNKNOWN
+Platform: UNKNOWN
+Classifier: Intended Audience :: Science/Research
+Classifier: Programming Language :: Python :: 3
+Classifier: Topic :: Scientific/Engineering :: Artificial Intelligence
+Requires-Dist: atari-py (>=0.1.7)
+Requires-Dist: opencv-python
+Requires-Dist: gym[atari,box2d] (>=0.10)
+Requires-Dist: matplotlib (>=3.0)
+Requires-Dist: torch (>=1.0)
+Requires-Dist: clize
+
+# rl_baselines
+UncharTECH Baselines for Reinforcement Learning Algorithms
+
+# Installation
+
+```sh
+pip install -e .  # at the root of this repo
+```
+
+# Notes
+
+DQN on Cartpole only works when using MSE loss. This has to do with the reward structure of Cartpole, where the agent gains +1 for every time step it survives.
+
+# Todo
+
+Relire PPO + benchmarker PPO sur Atari
+
+Refacto TD3
+
+Refacto code "experiments" sur le modèle de DQN/train_cartpole.py
+
+Faire une doc
+
+Réflexion sur l'outil de log
+
+Multiprocess + multiGPU pour DQN
+
+Faire RAINBOW, QR-DQN, et C51
+
+
+
+

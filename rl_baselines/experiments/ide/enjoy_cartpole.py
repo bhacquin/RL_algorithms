@@ -1,0 +1,73 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Fri Jan  4 10:18:48 2019
+
+@author: maxime
+
+"""
+import pickle
+import torch
+import time
+
+import gym
+import matplotlib.pyplot as plt
+import numpy as np
+
+from rl_baselines.baselines import IDE
+from rl_baselines.common.networks.mlp import MLP_Multihead
+from rl_baselines.common.networks.mlp import MLP_Threehead
+
+env = gym.make("CartPole-v0")
+
+agent = IDE(env,MLP_Threehead,n_quantiles=20)
+
+agent.load('cartpole/network.pth')
+
+"""
+obs = env.reset()
+returns = 0
+for i in range(10000):
+    action = agent.predict(torch.FloatTensor(obs))
+    obs, rew, done, info = env.step(action)
+    env.render()
+    time.sleep(0.02)
+    returns += rew
+    if done:
+        obs = env.reset()
+        print(returns)
+        returns = 0
+
+"""
+
+obs = env.reset()
+returns = 0
+for i in range(10000):
+    net1,net2,uncertainty = agent.network(torch.FloatTensor(obs))
+    net1 = net1.view(agent.env.action_space.n,agent.n_quantiles)
+    net2 = net2.view(agent.env.action_space.n,agent.n_quantiles)
+    
+    plt.cla()
+    #plt.axis([0,20,0,10])
+    pred1 = (np.array(net1[0,:].detach()) + np.array(net2[0,:].detach()))/2
+    pred2 = (np.array(net1[1,:].detach()) + np.array(net2[1,:].detach()))/2
+    plt.plot(np.array(net1[0,:].detach()), 'r', label="left")
+    plt.plot(np.array(net2[0,:].detach()), 'r', label="left")
+    plt.plot(np.array(net1[1,:].detach()), 'g', label="right")
+    plt.plot(np.array(net2[1,:].detach()), 'g', label="right")
+    plt.legend()
+    plt.draw()
+    plt.pause(0.01) 
+    
+    #uncertainty = torch.sqrt(torch.mean((net1-net2)**2,dim=1)/2).detach()
+    means = torch.mean((net1+net2)/2,dim=1).detach()
+    action = agent.predict(torch.FloatTensor(obs),directed_exploration=True)
+    obs, rew, done, info = env.step(action)
+    env.render()
+    time.sleep(0.05)
+    returns += rew
+    print(action, "means",means,"uncertainties",uncertainty)
+    if done:
+        obs = env.reset()
+        print(returns)
+        returns = 0
